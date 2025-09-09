@@ -81,6 +81,11 @@ async function handleEntryRequest(request: NextRequest, entryId: string) {
 
     // Stream back the response with original headers and status
     const proxiedHeaders = new Headers(response.headers);
+    
+    // Remove content-encoding header since we're streaming the already-decompressed body
+    proxiedHeaders.delete('content-encoding');
+    proxiedHeaders.delete('content-length'); // Content-Length might be wrong after decompression
+    
     return new Response(response.body, {
       status: response.status,
       statusText: response.statusText,

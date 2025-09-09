@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+/* Dark-only theme tokens */
+:root {
+  --background: #0b0f13;
+  --background-elevated: #0f141a;
+  --foreground: #e6edf3;
+  --muted-foreground: #9aa5b1;
+  --accent: #6ee7ff;
+  --accent-strong: #22d3ee;
+  --danger: #fb7185;
+  --success: #34d399;
+  --warning: #fbbf24;
+  --border: 30, 41, 59; /* rgb */
+  --ring: 34, 211, 238; /* rgb */
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* Base */
+html, body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+body {
+  @apply antialiased;
+  background-image:
+    radial-gradient(900px 450px at 80% -10%, rgba(34,211,238,0.06), transparent 60%),
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.00));
+}
+
+/* Glass utilities */
+.glass {
+  /* Note: cannot @apply custom class names elsewhere. Use this class directly in markup if needed. */
+  /* Reduced effects for performance */
+  @apply border rounded-xl shadow-lg border-white/10 bg-white/5;
+}
+
+.glass-hover:hover {
+  @apply bg-white/10 border-white/15;
+}
+
+.glass-card {
+  /* Keep the look without the expensive blur */
+  @apply border rounded-xl shadow-lg border-white/10 bg-white/5 p-6;
+}
+
+.glass-input {
+  /* Inputs are numerous; avoid blur and heavy shadows */
+  @apply border rounded-xl border-white/10 bg-white/5 w-full px-3 py-2 text-sm placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-300/40;
+}
+
+.glass-button {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-300/40;
+}
+
+.glass-select {
+  /* Selects follow input perf profile */
+  @apply border rounded-xl border-white/10 bg-white/5 w-full px-3 py-2 text-sm placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-300/40 appearance-none pr-10;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20' fill='none'%3E%3Cpath d='M6 8l4 4 4-4' stroke='%23AAB2BD' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
+}
+
+.glass-badge {
+  @apply inline-flex items-center rounded-md border border-white/10 bg-white/5 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-white/80;
+}
+
+.glass-divider {
+  @apply h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent;
+}
+
+.heading-gradient {
+  background: linear-gradient(180deg, #e6edf3 0%, #cbd5e1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Modal */
+.glass-modal-overlay {
+  /* Remove overlay blur; it's expensive across the whole viewport */
+  @apply fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50;
+}
+
+.glass-modal {
+  /* Keep localized blur on the modal only */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  @apply border rounded-xl shadow-xl border-white/15 bg-white/10 max-w-lg w-full max-h-[85vh] p-6 flex flex-col;
+}
+
+/* Scrollable content area inside modal */
+.modal-content { @apply overflow-auto; }
+
+/* Toasts */
+.glass-toast {
+  /* Toast base keeps structure and blur only; colors come from variants */
+  @apply rounded-xl shadow-lg backdrop-blur-md px-4 py-3 text-sm text-white/90 flex items-start gap-3 min-w-[280px] max-w-[400px];
+}
+.toast-title { @apply font-medium; }
+.toast-desc { @apply text-white/70 text-[13px]; }
+.toast-close { @apply ml-auto inline-flex items-center justify-center gap-2 rounded-lg h-8 px-2 text-xs font-medium transition-colors border border-white/10 bg-white/5 hover:bg-white/10 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-cyan-300/40; }
+
+/* Bottom nav glass */
+.glass-nav { @apply border rounded-2xl border-white/15 bg-white/10 backdrop-blur-md p-1; }
+
+/* Buttons inside modal should be slightly more opaque to avoid blending too much */
+.glass-modal .glass-button {
+  @apply bg-white/15 hover:bg-white/20 border-white/20 text-white;
+}
+
+/* Form accents */
+input[type="checkbox"], input[type="radio"] {
+  accent-color: var(--accent-strong);
+}

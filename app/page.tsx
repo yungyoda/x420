@@ -11,6 +11,8 @@ import { useToast } from "@/components/ui/Toast";
 import { useEntries } from "@/hooks/useEntries";
 import EntryCard from "@/components/EntryCard";
 import InlineActionButton from "@/components/InlineActionButton";
+import Tooltip from "@/components/ui/Tooltip";
+import { useHealthCheck } from "@/hooks/useHealthCheck";
 import CopyButton from "@/components/CopyButton";
 import Navigation from "@/components/common/Navigation";
 
@@ -31,6 +33,7 @@ export default function Home() {
 
   const { show } = useToast();
   const { mutate, isPending } = useCreateEntry();
+  const { check: runHealthCheck, isChecking } = useHealthCheck();
   const [createdId, setCreatedId] = React.useState<string | null>(null);
   const { data: entriesData, isLoading: entriesLoading, refetch: refetchEntries } = useEntries({ limit: 3, sort: 'newest' });
   const entries = entriesData?.entries ?? [];
@@ -209,26 +212,60 @@ export default function Home() {
                     onCopied={() => show({ type: 'success', title: 'Copied', description: 'ID copied to clipboard' })}
                   />
                 ) : (
-                  <InlineActionButton
-                    loading={isPending}
-                    disabled={!isFormValid || isPending}
-                    onClick={() => {
-                      if (!validateForm() || isPending) return;
-                      mutate(
-                        { endpoint, title, description, amount, wallet },
-                        {
-                          onSuccess: (data) => {
-                            setCreatedId(data.id);
-                            show({ type: 'success', title: 'Proxy created', description: `ID: ${data.id}` });
-                            refetchEntries(); // Refresh the entries list
-                          },
-                          onError: (error) => {
-                            show({ type: 'error', title: 'Failed to create entry', description: error.message });
-                          },
+                  <div className="flex items-center gap-2">
+                    <Tooltip content="Check if your endpoint works via the proxy">
+                      <InlineActionButton
+                        loading={isChecking}
+                        disabled={!endpoint || !!createdId || isChecking}
+                        ariaLabel="Health check"
+                        icon={
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="opacity-90">
+                            <path d="M3 12h4l2-5 4 10 2-5h4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                          </svg>
                         }
-                      );
-                    }}
-                  />
+                        onClick={async () => {
+                          if (!endpoint) return;
+                          try {
+                            const res = await runHealthCheck(endpoint);
+                            const statusText = `${res.status} ${res.statusText}`;
+                            if (res.ok) {
+                              show({ type: 'success', title: 'Endpoint reachable', description: statusText });
+                              // Open in new tab to show actual response
+                              const url = `/api/health?${new URLSearchParams({ endpoint }).toString()}`;
+                              window.open(url, '_blank');
+                            } else {
+                              show({ type: 'error', title: 'Health check failed', description: statusText });
+                            }
+                          } catch (e) {
+                            show({ type: 'error', title: 'Health check error', description: (e as Error).message });
+                          }
+                        }}
+                      />
+                    </Tooltip>
+                    <Tooltip content="Create temporary x402 proxy for your endpoint">
+                      <InlineActionButton
+                        loading={isPending}
+                        disabled={!isFormValid || isPending}
+                        ariaLabel="Create proxy"
+                        onClick={() => {
+                          if (!validateForm() || isPending) return;
+                          mutate(
+                            { endpoint, title, description, amount, wallet },
+                            {
+                              onSuccess: (data) => {
+                                setCreatedId(data.id);
+                                show({ type: 'success', title: 'Proxy created', description: `ID: ${data.id}` });
+                                refetchEntries();
+                              },
+                              onError: (error) => {
+                                show({ type: 'error', title: 'Failed to create entry', description: error.message });
+                              },
+                            }
+                          );
+                        }}
+                      />
+                    </Tooltip>
+                  </div>
                 )
               }
             />

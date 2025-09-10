@@ -80,4 +80,11 @@ export async function getEntries(params: GetEntriesParams = {}, init?: RequestIn
   return res.json();
 }
 
+// Health check: fetch given endpoint through backend health proxy
+export async function healthCheck(targetEndpoint: string, init?: RequestInit): Promise<Response> {
+  const url = `/api/health?${new URLSearchParams({ endpoint: targetEndpoint }).toString()}`;
+  const res = await fetch(url, { method: 'GET', cache: 'no-store', ...init });
+  return res;
+}
+
 

@@ -9,9 +9,14 @@ import type { Entry } from "@/lib/api";
 
 interface EntryCardProps {
   entry: Entry;
+  onCardClick?: () => void;
+  metadata?: {
+    network?: string;
+    assetName?: string;
+  };
 }
 
-export default function EntryCard({ entry }: EntryCardProps) {
+export default function EntryCard({ entry, onCardClick, metadata }: EntryCardProps) {
   const { show } = useToast();
 
   // Get current domain for ID prefixing
@@ -23,15 +28,25 @@ export default function EntryCard({ entry }: EntryCardProps) {
   return (
     <Card 
       className="p-4 cursor-pointer transition-all duration-200 hover:scale-[1.02] group h-full flex flex-col"
-      onClick={() => window.open(getDomainId(entry.id), '_blank')}
+      onClick={() => (onCardClick ? onCardClick() : window.open(getDomainId(entry.id), '_blank'))}
     >
       <CardHeader className="flex-1">
         <div className="flex justify-between items-start">
-          <div className="flex-1">
-            <CardTitle>{entry.title}</CardTitle>
-            <CardDescription>{entry.description}</CardDescription>
+          <div className="flex-1 min-w-0 overflow-hidden">
+            <CardTitle className="truncate">{entry.title}</CardTitle>
+            <CardDescription className="break-words">{entry.description}</CardDescription>
+            {(metadata?.network || metadata?.assetName) && (
+              <div className="mt-2 flex items-center gap-2">
+                {metadata?.network && (
+                  <Badge variant="muted">{metadata.network}</Badge>
+                )}
+                {metadata?.assetName && (
+                  <Badge variant="muted">{metadata.assetName}</Badge>
+                )}
+              </div>
+            )}
           </div>
-          <div className="text-right ml-4">
+          <div className="text-right ml-4 shrink-0">
             <div className="text-2xl font-bold text-white">${entry.amount}</div>
             <div className="text-sm text-white/60">per call</div>
           </div>

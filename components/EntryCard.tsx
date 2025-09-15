@@ -9,9 +9,16 @@ import type { Entry } from "@/lib/api";
 
 interface EntryCardProps {
   entry: Entry;
+  onCardClick?: () => void;
+  metadata?: {
+    network?: string;
+    assetName?: string;
+  };
+  statusOverride?: 'healthy' | 'unhealthy' | 'unknown';
+  disabled?: boolean;
 }
 
-export default function EntryCard({ entry }: EntryCardProps) {
+export default function EntryCard({ entry, onCardClick, metadata, statusOverride, disabled = false }: EntryCardProps) {
   const { show } = useToast();
 
   // Get current domain for ID prefixing
@@ -20,18 +27,32 @@ export default function EntryCard({ entry }: EntryCardProps) {
     return `${window.location.origin}/api/${id}`;
   };
 
+  const baseClasses = "p-4 transition-all duration-200 h-full flex flex-col";
+  const interactiveClasses = disabled ? "cursor-pointer" : "cursor-pointer hover:scale-[1.02] group";
+
   return (
     <Card 
-      className="p-4 cursor-pointer transition-all duration-200 hover:scale-[1.02] group h-full flex flex-col"
-      onClick={() => window.open(getDomainId(entry.id), '_blank')}
+      className={[baseClasses, interactiveClasses].join(" ")}
+      aria-disabled={disabled}
+      onClick={() => (onCardClick ? onCardClick() : window.open(getDomainId(entry.id), '_blank'))}
     >
       <CardHeader className="flex-1">
         <div className="flex justify-between items-start">
-          <div className="flex-1">
-            <CardTitle>{entry.title}</CardTitle>
-            <CardDescription>{entry.description}</CardDescription>
+          <div className="flex-1 min-w-0 overflow-hidden">
+            <CardTitle className="truncate">{entry.title}</CardTitle>
+            <CardDescription className="break-words">{entry.description}</CardDescription>
+            {(metadata?.network || metadata?.assetName) && (
+              <div className="mt-2 flex items-center gap-2">
+                {metadata?.network && (
+                  <Badge variant="muted">{metadata.network}</Badge>
+                )}
+                {metadata?.assetName && (
+                  <Badge variant="muted">{metadata.assetName}</Badge>
+                )}
+              </div>
+            )}
           </div>
-          <div className="text-right ml-4">
+          <div className="text-right ml-4 shrink-0">
             <div className="text-2xl font-bold text-white">${entry.amount}</div>
             <div className="text-sm text-white/60">per call</div>
           </div>
@@ -48,7 +69,7 @@ export default function EntryCard({ entry }: EntryCardProps) {
               <line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
-          <CountdownTimer expiresAt={entry.expiresAt} />
+          <CountdownTimer expiresAt={entry.expiresAt} statusOverride={statusOverride} />
         </div>
       </CardContent>
     </Card>

@@ -26,17 +26,27 @@ export default function Navigation() {
       </Button>
 
       {pathname === '/' && (
-        <Button
-          onClick={() => router.push('/entries')}
-          variant="ghost"
-          size="sm"
-          className="px-4 py-2"
-        >
-          Browse All APIs
-        </Button>
+        <div className="flex items-center gap-2">
+          <Button
+            onClick={() => router.push('/entries')}
+            variant="ghost"
+            size="sm"
+            className="px-4 py-2"
+          >
+            Browse All APIs
+          </Button>
+          <Button
+            onClick={() => router.push('/bazaar')}
+            variant="ghost"
+            size="sm"
+            className="px-4 py-2"
+          >
+            Bazaar
+          </Button>
+        </div>
       )}
 
-      {pathname === '/entries' && (
+      {(pathname === '/entries' || pathname === '/bazaar') && (
         <Button
           onClick={() => router.push('/')}
           variant="ghost"

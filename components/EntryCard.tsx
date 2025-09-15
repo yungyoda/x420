@@ -14,9 +14,11 @@ interface EntryCardProps {
     network?: string;
     assetName?: string;
   };
+  statusOverride?: 'healthy' | 'unhealthy' | 'unknown';
+  disabled?: boolean;
 }
 
-export default function EntryCard({ entry, onCardClick, metadata }: EntryCardProps) {
+export default function EntryCard({ entry, onCardClick, metadata, statusOverride, disabled = false }: EntryCardProps) {
   const { show } = useToast();
 
   // Get current domain for ID prefixing
@@ -25,9 +27,13 @@ export default function EntryCard({ entry, onCardClick, metadata }: EntryCardPro
     return `${window.location.origin}/api/${id}`;
   };
 
+  const baseClasses = "p-4 transition-all duration-200 h-full flex flex-col";
+  const interactiveClasses = disabled ? "cursor-pointer" : "cursor-pointer hover:scale-[1.02] group";
+
   return (
     <Card 
-      className="p-4 cursor-pointer transition-all duration-200 hover:scale-[1.02] group h-full flex flex-col"
+      className={[baseClasses, interactiveClasses].join(" ")}
+      aria-disabled={disabled}
       onClick={() => (onCardClick ? onCardClick() : window.open(getDomainId(entry.id), '_blank'))}
     >
       <CardHeader className="flex-1">
@@ -63,7 +69,7 @@ export default function EntryCard({ entry, onCardClick, metadata }: EntryCardPro
               <line x1="10" y1="14" x2="21" y2="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </div>
-          <CountdownTimer expiresAt={entry.expiresAt} />
+          <CountdownTimer expiresAt={entry.expiresAt} statusOverride={statusOverride} />
         </div>
       </CardContent>
     </Card>

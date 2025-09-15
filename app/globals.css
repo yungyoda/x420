@@ -53,8 +53,10 @@ body {
 }
 
 .glass-card {
-  /* Keep the look without the expensive blur */
-  @apply border rounded-xl shadow-lg border-white/10 bg-white/5 p-6;
+  /* Light blur for better separation without heavy cost */
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  @apply border rounded-xl shadow-lg border-white/10 bg-white/5 p-6 backdrop-blur-2xl;
 }
 
 .glass-input {

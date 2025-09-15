@@ -6,9 +6,10 @@ import Badge from "@/components/ui/Badge";
 interface CountdownTimerProps {
   expiresAt: string | null;
   className?: string;
+  statusOverride?: 'healthy' | 'unhealthy' | 'unknown';
 }
 
-export default function CountdownTimer({ expiresAt, className = "" }: CountdownTimerProps) {
+export default function CountdownTimer({ expiresAt, className = "", statusOverride }: CountdownTimerProps) {
   const [timeLeft, setTimeLeft] = React.useState<string>("");
 
   React.useEffect(() => {
@@ -48,6 +49,11 @@ export default function CountdownTimer({ expiresAt, className = "" }: CountdownT
   }, [expiresAt]);
 
   const getStatusColor = () => {
+    if (statusOverride) {
+      if (statusOverride === 'healthy') return "bg-green-400";
+      if (statusOverride === 'unhealthy') return "bg-red-400";
+      return "bg-gray-400";
+    }
     if (!expiresAt) return "bg-green-400";
     if (timeLeft === "Expired") return "bg-red-400";
     if (timeLeft === "Never expires") return "bg-green-400";

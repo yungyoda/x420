@@ -16,6 +16,7 @@ export default function BazaarPage() {
     hasMore,
     isLoadingMore,
     loadMore,
+    statusByEndpoint,
   } = useBazaar({ limit: 8 });
 
   const containerVariants = {
@@ -62,7 +63,7 @@ export default function BazaarPage() {
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
               {services.map((service, idx) => (
-                <motion.div key={`${service.resource}-${idx}`} variants={itemVariants}>
+                <motion.div key={`${service.resource}-${idx}`} variants={itemVariants} className="relative">
                   {/* Reuse EntryCard for now by mapping to entry-like shape */}
                   <EntryCard
                     entry={{
@@ -85,8 +86,17 @@ export default function BazaarPage() {
                       network: service.accepts?.[0]?.network,
                       assetName: (service.accepts?.[0]?.extra as any)?.name,
                     }}
+                    statusOverride={(statusByEndpoint[service.resource] as any) || 'unknown'}
+                    disabled={(statusByEndpoint[service.resource] || 'unknown') === 'unhealthy'}
                     onCardClick={() => window.open(service.resource, "_blank")}
                   />
+                  {(() => {
+                    const status = statusByEndpoint[service.resource] || 'unknown';
+                    if (status !== 'unhealthy') return null;
+                    return (
+                      <div className="absolute inset-0 rounded-xl bg-black/40 pointer-events-none" />
+                    );
+                  })()}
                 </motion.div>
               ))}
             </div>

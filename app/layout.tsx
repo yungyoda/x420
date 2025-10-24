@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "0xtheplug.xyz",
     images: [
       {
-        url: "/og-image.png",
+        url: "/og-image.webp",
         width: 1200,
         height: 630,
         alt: "0xtheplug.xyz - Your favorite agents favorite plug",
@@ -49,7 +49,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "0xtheplug.xyz",
     description: "Your favorite agents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.",
-    images: ["/og-image.png"],
+    images: ["/og-image.webp"],
   },
   metadataBase: new URL("https://0xtheplug.xyz"),
 };

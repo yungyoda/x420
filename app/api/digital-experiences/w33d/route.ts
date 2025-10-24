@@ -7,8 +7,8 @@ export async function POST(request: NextRequest) {
   return basePost(request, { params: Promise.resolve({ slug: 'w33d' }) });
 }
 
-export async function GET() {
-  return baseGet();
+export async function GET(request: NextRequest) {
+  return baseGet(request, { params: Promise.resolve({ slug: 'w33d' }) });
 }
 
 

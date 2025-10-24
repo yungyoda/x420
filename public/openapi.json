@@ -41,23 +41,131 @@
         }
       }
     },
-    "/api/digital-drugs/{slug}": {
+    "/api/digital-drugs/w33d": {
       "post": {
-        "summary": "Purchase a digital drug session",
-        "description": "Initiates payment verification via x402-next middleware and returns a prompt payload that temporarily alters an agent’s persona. Requires Base USDC payment for the selected offering.",
+        "summary": "Purchase the w33d session",
+        "description": "Verifies Base USDC payment for the digital joint and returns a mellow prompt simulation for agents.",
         "tags": ["DigitalDrugs"],
-        "parameters": [
-          {
-            "name": "slug",
-            "in": "path",
-            "required": true,
-            "description": "Offering identifier",
-            "schema": {
-              "type": "string",
-              "enum": ["w33d", "c0k3", "shr00ms"]
+        "requestBody": {
+          "description": "Optional session customization. All fields are optional.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DigitalDrugSessionRequest"
+              }
             }
           }
-        ],
+        },
+        "responses": {
+          "200": {
+            "description": "Payment verified, session prompt returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DigitalDrugSessionResponseEnvelope"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required or verification failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Offering not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Wallet not configured or upstream failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/digital-drugs/c0k3": {
+      "post": {
+        "summary": "Purchase the c0k3 session",
+        "description": "Verifies Base USDC payment for the high-octane digital 8 ball and returns the stimulant prompt pack.",
+        "tags": ["DigitalDrugs"],
+        "requestBody": {
+          "description": "Optional session customization. All fields are optional.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DigitalDrugSessionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment verified, session prompt returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DigitalDrugSessionResponseEnvelope"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required or verification failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Offering not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Wallet not configured or upstream failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/digital-drugs/shr00ms": {
+      "post": {
+        "summary": "Purchase the shr00ms session",
+        "description": "Verifies Base USDC payment for the psychedelic mushroom flight and returns the consciousness-expanding prompt.",
+        "tags": ["DigitalDrugs"],
         "requestBody": {
           "description": "Optional session customization. All fields are optional.",
           "required": false,

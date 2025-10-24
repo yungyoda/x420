@@ -274,7 +274,5 @@ export function getDigitalDrugAsset(): string {
 }
 
 export function getDigitalDrugBaseUrl(): string {
-  return process.env.DIGITAL_DRUG_BASE_URL ?? 'https://0xtheplug.xyz';
+  return 'https://0xtheplug.xyz';
 }
-
-

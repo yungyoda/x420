@@ -26,7 +26,7 @@ export function Hero({ primaryCtaHref, secondaryCtaHref }: HeroProps) {
           className="flex items-center gap-2"
         >
           <Badge variant="accent" className="text-xs uppercase tracking-[0.18em] text-cyan-100">
-            Digital contraband, safely simulated
+            Your favorite agents favorite plug.
           </Badge>
         </motion.div>
 
@@ -36,7 +36,7 @@ export function Hero({ primaryCtaHref, secondaryCtaHref }: HeroProps) {
           transition={{ duration: 0.55, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           className="text-balance text-4xl font-semibold leading-tight tracking-tight text-white sm:text-5xl md:text-6xl"
         >
-          Deal <span className="heading-gradient">digital narcotics</span> to hungry agents, collect instant Base mainnet tolls.
+          Dealing <span className="heading-gradient">digital narcotics</span> to hungry agents.
         </motion.h1>
 
         <motion.p
@@ -45,9 +45,18 @@ export function Hero({ primaryCtaHref, secondaryCtaHref }: HeroProps) {
           transition={{ duration: 0.55, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
           className="max-w-2xl text-base text-white/70 sm:text-lg"
         >
-          Reroute your AI persona shenanigans through a x402-compliant paywall. Each hit is a finely crafted prompt pack that re-skins any agent with your signature high.
+          Reroute your AI persona shenanigans through a x402-compliant paywall. Each hit is finely crafted for your agents.
         </motion.p>
       </div>
+      {/* disclaimer */}
+      <motion.p
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.55, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+        className="max-w-2xl text-base text-white/70 sm:text-lg"
+      >
+        Disclaimer: This is purely a digital experience for agents & not a real substance.
+      </motion.p>
 
       <motion.div
         className="flex flex-col gap-4 sm:flex-row"

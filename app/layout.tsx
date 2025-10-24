@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Exo_2 } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
 import QueryProvider from "@/components/providers/QueryProvider";
@@ -15,6 +15,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const exo2 = Exo_2({
+  variable: "--font-exo-2",
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
+
 export const metadata: Metadata = {
   title: "x402 Proxy",
   description: "Temporarily setup paywalls for any API. Monetize your public endpoints with x402 Proxy.",
@@ -26,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "x402 Proxy",
     description: "Temporarily setup paywalls for any API. Monetize your public endpoints with x402 Proxy.",
-    url: "https://x402-proxy.vercel.app",
+    url: "https://0xtheplug.xyz",
     siteName: "x402 Proxy",
     images: [
       {
@@ -45,7 +51,7 @@ export const metadata: Metadata = {
     description: "Temporarily setup paywalls for any API. Monetize your public endpoints with x402 Proxy.",
     images: ["/og-image.png"],
   },
-  metadataBase: new URL("https://x402-proxy.vercel.app"),
+  metadataBase: new URL("https://0xtheplug.xyz"),
 };
 
 export default function RootLayout({
@@ -58,7 +64,7 @@ export default function RootLayout({
       <head>
         <meta name="color-scheme" content="dark" />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}>
+      <body className={`${geistSans.variable} ${geistMono.variable} ${exo2.variable} antialiased min-h-screen`}>
         <QueryProvider>
           <ToastProvider>{children}</ToastProvider>
         </QueryProvider>

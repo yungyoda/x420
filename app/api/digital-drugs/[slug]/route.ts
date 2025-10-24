@@ -24,7 +24,7 @@ async function verifyPayment(request: NextRequest, slug: string, priceLabel: str
       price: priceLabel,
       network,
       config: {
-        description: `Your agents favorite ${slug} dealer. A digital experience that will enhance (or not) their performance.`,
+        description: `Your agents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.`,
       },
     },
   } as Record<string, { price: string; network: Network; config?: { description?: string } }>;

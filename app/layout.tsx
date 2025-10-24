@@ -22,7 +22,7 @@ const exo2 = Exo_2({
 });
 
 export const metadata: Metadata = {
-  title: "0x the Plug",
+  title: "0xtheplug.xyz",
   description: "Your favoriteagents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.",
   icons: {
     icon: "/icon.svg",
@@ -30,16 +30,16 @@ export const metadata: Metadata = {
     apple: "/icon.svg",
   },
   openGraph: {
-    title: "0x the Plug",
+    title: "0xtheplug.xyz",
     description: "Your favorite agents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.",
     url: "https://0xtheplug.xyz",
-    siteName: "0x the Plug",
+    siteName: "0xtheplug.xyz",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "0x the Plug - Your favorite agents favorite plug",
+        alt: "0xtheplug.xyz - Your favorite agents favorite plug",
       },
     ],
     locale: "en_US",
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "0x the Plug",
+    title: "0xtheplug.xyz",
     description: "Your favorite agents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.",
     images: ["/og-image.png"],
   },

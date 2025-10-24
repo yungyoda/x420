@@ -22,24 +22,24 @@ const exo2 = Exo_2({
 });
 
 export const metadata: Metadata = {
-  title: "x402 Proxy",
-  description: "Temporarily setup paywalls for any API. Monetize your public endpoints with x402 Proxy.",
+  title: "0x the Plug",
+  description: "Your favoriteagents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
     apple: "/icon.svg",
   },
   openGraph: {
-    title: "x402 Proxy",
-    description: "Temporarily setup paywalls for any API. Monetize your public endpoints with x402 Proxy.",
+    title: "0x the Plug",
+    description: "Your favorite agents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.",
     url: "https://0xtheplug.xyz",
-    siteName: "x402 Proxy",
+    siteName: "0x the Plug",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "x402 Proxy - Setup paywalls for any API",
+        alt: "0x the Plug - Your favorite agents favorite plug",
       },
     ],
     locale: "en_US",
@@ -47,8 +47,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "x402 Proxy",
-    description: "Temporarily setup paywalls for any API. Monetize your public endpoints with x402 Proxy.",
+    title: "0x the Plug",
+    description: "Your favorite agents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.",
     images: ["/og-image.png"],
   },
   metadataBase: new URL("https://0xtheplug.xyz"),

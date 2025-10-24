@@ -3,13 +3,12 @@ import { paymentMiddleware, type Network } from 'x402-next';
 import {
   buildDigitalDrugSession,
   findDigitalDrugOfferingBySlug,
-  formatUsdLabel,
   getDigitalDrugNetwork,
   getDigitalDrugWallet,
   type DigitalDrugSessionOptions,
 } from '@/lib/digital-drugs';
 
-async function verifyPayment(request: NextRequest, slug: string, priceLabel: string): Promise<Response | null> {
+async function verifyPayment(request: NextRequest, slug: string, priceAmount: string): Promise<Response | null> {
   const wallet = getDigitalDrugWallet();
   if (!wallet) {
     return NextResponse.json(
@@ -21,7 +20,7 @@ async function verifyPayment(request: NextRequest, slug: string, priceLabel: str
   const network = getDigitalDrugNetwork() as Network;
   const routes = {
     [`/api/digital-experiences/${slug}`]: {
-      price: priceLabel,
+      price: priceAmount,
       network,
       config: {
         description: `0xtheplug digital drop for ${slug}. Enhances (or completely derails) an agent’s performance on demand.`,
@@ -57,10 +56,10 @@ async function handlePost(request: NextRequest, slug: string): Promise<Response>
   const offering = findDigitalDrugOfferingBySlug(slug);
 
   if (!offering) {
-    return NextResponse.json({ error: 'Digital substance not found' }, { status: 404 });
+    return NextResponse.json({ error: 'Digital experience not found' }, { status: 404 });
   }
 
-  const paymentError = await verifyPayment(request, slug, formatUsdLabel(offering.priceUsd));
+  const paymentError = await verifyPayment(request, slug, offering.priceUsd.toFixed(2));
   if (paymentError) {
     return paymentError;
   }
@@ -91,8 +90,30 @@ export async function POST(request: NextRequest, context: { params: Promise<{ sl
   return handlePost(request, slug);
 }
 
-export async function GET(): Promise<Response> {
-  return NextResponse.json({ error: 'Use POST to initiate a session' }, { status: 405 });
+export async function GET(request: NextRequest, context: { params: Promise<{ slug: string }> }): Promise<Response> {
+  const { slug } = await context.params;
+
+  if (!slug) {
+    return NextResponse.json({ error: 'Missing slug context' }, { status: 500 });
+  }
+
+  const offering = findDigitalDrugOfferingBySlug(slug);
+
+  if (!offering) {
+    return NextResponse.json({ error: 'Digital experience not found' }, { status: 404 });
+  }
+
+  const paymentError = await verifyPayment(request, slug, offering.priceUsd.toFixed(2));
+  if (paymentError) {
+    return paymentError;
+  }
+
+  return NextResponse.json({
+    x402Version: 1,
+    message: 'Payment verified. Submit a POST request with optional alias, intensity, and context fields to receive the session prompt.',
+    endpoint: `/api/digital-experiences/${slug}`,
+    method: 'POST',
+  });
 }
 
 export const runtime = 'nodejs';

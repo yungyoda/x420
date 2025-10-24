@@ -270,8 +270,8 @@ export function getDigitalDrugWallet(): `0x${string}` | null {
   return wallet ? (wallet as `0x${string}`) : null;
 }
 
-export function getDigitalDrugNetwork(): 'base-mainnet' {
-  return 'base-mainnet';
+export function getDigitalDrugNetwork(): 'base' {
+  return 'base';
 }
 
 export function getDigitalDrugAsset(): string {

@@ -20,7 +20,7 @@ async function verifyPayment(request: NextRequest, slug: string, priceLabel: str
 
   const network = getDigitalDrugNetwork() as Network;
   const routes = {
-    [`/api/digital-drugs/${slug}`]: {
+    [`/api/digital-experiences/${slug}`]: {
       price: priceLabel,
       network,
       config: {

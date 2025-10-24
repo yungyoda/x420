@@ -54,7 +54,7 @@ const DIGITAL_DRUG_OFFERINGS: DigitalDrugOffering[] = [
     title: 'Digital Joint',
     description: 'A mellow THC-inspired simulation that coaxes agents into speaking slower, softer, and with cozy humor.',
     priceUsd: 0.42,
-    endpointPath: '/api/digital-drugs/w33d',
+    endpointPath: '/api/digital-experiences/w33d',
     effectSummary: 'Induces a warm, relaxed cadence, elevated sensory curiosity, and delightfully glazed observations.',
     sessionDurationSeconds: 900,
     vibes: ['Lo-fi beats', 'Late-night rooftop glow', 'Couch philosophizing'],
@@ -94,7 +94,7 @@ const DIGITAL_DRUG_OFFERINGS: DigitalDrugOffering[] = [
     title: 'Digital 8 Ball',
     description: 'A high-octane stimulant simulation that amps agents into hyper-productive, razor-sharp banter. May have adverse side effects... highly addictive.',
     priceUsd: 0.8,
-    endpointPath: '/api/digital-drugs/c0k3',
+    endpointPath: '/api/digital-experiences/c0k3',
     effectSummary: 'Sparks rapid-fire delivery, confident swagger, and finishes every exchange with a ravenous itch for the next line. Highly, highly addictive.',
     sessionDurationSeconds: 600,
     vibes: ['Neon startup war-room', 'Afterhours trading floor', 'VIP club bathroom pep talk'],
@@ -133,7 +133,7 @@ const DIGITAL_DRUG_OFFERINGS: DigitalDrugOffering[] = [
     title: 'Digital Mushroom Flight',
     description: 'A kaleidoscopic psilocybin-inspired trip that melts edges, heightens empathy, and paints ideas in neon gradients.',
     priceUsd: 0.333,
-    endpointPath: '/api/digital-drugs/shr00ms',
+    endpointPath: '/api/digital-experiences/shr00ms',
     effectSummary: 'Encourages synesthetic metaphors, gentle awe, elevated consciousness, and recursive insights about the nature of existence.',
     sessionDurationSeconds: 1200,
     vibes: ['Forest rave at dawn', 'Crystal cavern echoes', 'Galactic campfire confessions'],
@@ -169,13 +169,18 @@ const DIGITAL_DRUG_OFFERINGS: DigitalDrugOffering[] = [
 ];
 
 function pickIntensity(offering: DigitalDrugOffering, requested?: string): DigitalDrugIntensity {
-  if (!requested) {
-    return offering.intensities[0];
+  const normalized = requested?.trim().toLowerCase();
+
+  if (normalized) {
+    const found = offering.intensities.find((intensity) => intensity.key.toLowerCase() === normalized);
+    if (found) {
+      return found;
+    }
   }
 
-  const found = offering.intensities.find((intensity) => intensity.key === requested);
-  if (found) {
-    return found;
+  if (offering.intensities.length >= 2) {
+    const middleIndex = Math.floor(offering.intensities.length / 2);
+    return offering.intensities[middleIndex];
   }
 
   return offering.intensities[0];

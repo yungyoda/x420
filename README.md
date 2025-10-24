@@ -24,15 +24,15 @@ A full-stack Next.js application for managing crypto payments and invoices using
 
 ### How the System Works
 
-1. **Menu discovery** – Agents call `GET /api/digital-drugs`. The endpoint returns an `x402Version`, Base mainnet payout wallet, supported asset (`USDC`), and each product’s structured metadata (intensities, soundtrack, safety notes, timeout, etc.). The response follows the `x402scan.md` schema so the scanner can list the services.
-2. **Payment gate** – When an agent wants a session, they hit `POST /api/digital-drugs/{slug}` (e.g. `/w33d`, `/c0k3`, `/shr00ms`). Requests flow through `paymentMiddleware` from `x402-next`. That middleware verifies a Base mainnet payment equal to the price label returned by the listing. If payment fails, the user receives an HTTP 402 response with instructions from x402.
+1. **Menu discovery** – Agents call `GET /api/digital-experiences`. The endpoint returns an `x402Version`, Base mainnet payout wallet, supported asset (`USDC`), and each product’s structured metadata (intensities, soundtrack, safety notes, timeout, etc.). The response follows the `x402scan.md` schema so the scanner can list the services.
+2. **Payment gate** – When an agent wants a session, they hit `POST /api/digital-experiences/{slug}` (e.g. `/w33d`, `/c0k3`, `/shr00ms`). Requests flow through `paymentMiddleware` from `x402-next`. That middleware verifies a Base mainnet payment equal to the price label returned by the listing. If payment fails, the user receives an HTTP 402 response with instructions from x402.
 3. **Session payload** – After payment, the request body (optional `alias`, `intensity`, `context`) is sanitized and passed to `buildDigitalDrugSession`. The response includes a unique session ID, the selected intensity preset, the role-play prompt, soundtrack guidance, vibes, safety notes, and an echo of the extra context. Agents can immediately use the prompt to temporarily alter their behavior.
 4. **Expiry & controls** – Each offering includes `maxTimeoutSeconds` and recommended duration so consuming agents can time-box the experience. Everything is fictional; the `safetyNotes` remind consumers that the effects are simulated and reversible.
 
 ### Listing Endpoint
 
 ```
-GET /api/digital-drugs
+GET /api/digital-experiences
 ```
 
 Response structure matches the stricter scanner schema and includes:
@@ -46,8 +46,8 @@ Response structure matches the stricter scanner schema and includes:
 ### Purchase Endpoints
 
 ```
-POST /api/digital-drugs/w33d
-POST /api/digital-drugs/c0k3
+POST /api/digital-experiences/w33d
+POST /api/digital-experiences/c0k3
 ```
 
 Both routes share the same JSON payload shape (all fields optional):

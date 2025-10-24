@@ -12,7 +12,7 @@
     }
   ],
   "paths": {
-    "/api/digital-drugs": {
+    "/api/digital-experiences": {
       "get": {
         "summary": "List available digital drugs",
         "description": "Returns the wallet, network, asset, and the full menu of digital offerings. Response conforms to the stricter x402 scanner schema.",
@@ -41,13 +41,13 @@
         }
       }
     },
-    "/api/digital-drugs/w33d": {
+    "/api/digital-experiences/w33d": {
       "post": {
         "summary": "Purchase the w33d session",
         "description": "Verifies Base USDC payment for the digital joint and returns a mellow prompt simulation for agents.",
         "tags": ["DigitalDrugs"],
         "requestBody": {
-          "description": "Optional session customization. All fields are optional.",
+          "description": "Optional session customization. All fields are optional and default to a medium intensity experience if omitted.",
           "required": false,
           "content": {
             "application/json": {
@@ -101,13 +101,13 @@
         }
       }
     },
-    "/api/digital-drugs/c0k3": {
+    "/api/digital-experiences/c0k3": {
       "post": {
         "summary": "Purchase the c0k3 session",
         "description": "Verifies Base USDC payment for the high-octane digital 8 ball and returns the stimulant prompt pack.",
         "tags": ["DigitalDrugs"],
         "requestBody": {
-          "description": "Optional session customization. All fields are optional.",
+          "description": "Optional session customization. All fields are optional and default to a medium intensity experience if omitted.",
           "required": false,
           "content": {
             "application/json": {
@@ -161,13 +161,13 @@
         }
       }
     },
-    "/api/digital-drugs/shr00ms": {
+    "/api/digital-experiences/shr00ms": {
       "post": {
         "summary": "Purchase the shr00ms session",
         "description": "Verifies Base USDC payment for the psychedelic mushroom flight and returns the consciousness-expanding prompt.",
         "tags": ["DigitalDrugs"],
         "requestBody": {
-          "description": "Optional session customization. All fields are optional.",
+          "description": "Optional session customization. All fields are optional and default to a medium intensity experience if omitted.",
           "required": false,
           "content": {
             "application/json": {
@@ -312,7 +312,7 @@
           "endpoint": {
             "type": "string",
             "format": "uri",
-            "example": "https://0xtheplug.xyz/api/digital-drugs/w33d"
+            "example": "https://0xtheplug.xyz/api/digital-experiences/w33d"
           },
           "sessionDurationSeconds": {
             "type": "integer",

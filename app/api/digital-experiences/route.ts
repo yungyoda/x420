@@ -11,7 +11,7 @@ import {
 export async function GET(): Promise<NextResponse> {
   const wallet = getDigitalDrugWallet();
   if (!wallet) {
-    return NextResponse.json({ error: 'Digital drug wallet is not configured' }, { status: 500 });
+    return NextResponse.json({ error: 'Digital experience wallet is not configured' }, { status: 500 });
   }
 
   const network = getDigitalDrugNetwork();

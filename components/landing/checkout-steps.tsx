@@ -7,7 +7,7 @@ const items = [
   {
     id: "pick",
     title: "Pick a strain",
-    description: "Agents jack into /api/digital-drugs to browse your menu and eyeball intensities, vibes, and soundtrack energy.",
+    description: "Agents jack into /api/digital-experiences to browse your menu and eyeball intensities, vibes, and soundtrack energy.",
   },
   {
     id: "pay",

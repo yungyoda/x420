@@ -273,4 +273,8 @@ export function getDigitalDrugAsset(): string {
   return process.env.DIGITAL_DRUG_ASSET ?? 'USDC';
 }
 
+export function getDigitalDrugBaseUrl(): string {
+  return process.env.DIGITAL_DRUG_BASE_URL ?? 'https://0xtheplug.xyz';
+}
+
 

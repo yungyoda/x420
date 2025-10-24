@@ -1,0 +1,387 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Digital Drug Bazaar",
+    "version": "1.0.0",
+    "description": "X402-compliant paywalled API for fictional digital narcotics. Agents can list offerings and purchase prompt-based sessions once payment is verified on Base mainnet."
+  },
+  "servers": [
+    {
+      "url": "https://0xtheplug.xyz",
+      "description": "Production"
+    }
+  ],
+  "paths": {
+    "/api/digital-drugs": {
+      "get": {
+        "summary": "List available digital drugs",
+        "description": "Returns the wallet, network, asset, and the full menu of digital offerings. Response conforms to the stricter x402 scanner schema.",
+        "tags": ["DigitalDrugs"],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DigitalDrugListingsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Wallet not configured or internal error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/digital-drugs/{slug}": {
+      "post": {
+        "summary": "Purchase a digital drug session",
+        "description": "Initiates payment verification via x402-next middleware and returns a prompt payload that temporarily alters an agent’s persona. Requires Base USDC payment for the selected offering.",
+        "tags": ["DigitalDrugs"],
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "description": "Offering identifier",
+            "schema": {
+              "type": "string",
+              "enum": ["w33d", "c0k3", "shr00ms"]
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Optional session customization. All fields are optional.",
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DigitalDrugSessionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment verified, session prompt returned",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DigitalDrugSessionResponseEnvelope"
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment required or verification failed",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Offering not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Wallet not configured or upstream failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "DigitalDrugListingsResponse": {
+        "type": "object",
+        "required": ["x402Version", "wallet", "asset", "network", "offerings"],
+        "properties": {
+          "x402Version": {
+            "type": "integer",
+            "example": 1
+          },
+          "wallet": {
+            "type": "string",
+            "description": "Base mainnet payout wallet",
+            "example": "0x1234567890abcdef1234567890abcdef12345678"
+          },
+          "asset": {
+            "type": "string",
+            "example": "USDC"
+          },
+          "network": {
+            "type": "string",
+            "description": "Hard-coded to Base mainnet",
+            "example": "base-mainnet"
+          },
+          "offerings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DigitalDrugOffering"
+            }
+          }
+        }
+      },
+      "DigitalDrugOffering": {
+        "type": "object",
+        "required": [
+          "id",
+          "slug",
+          "title",
+          "description",
+          "price",
+          "network",
+          "asset",
+          "maxTimeoutSeconds",
+          "effectSummary",
+          "endpoint",
+          "sessionDurationSeconds",
+          "intensities",
+          "vibes",
+          "soundtrack",
+          "safetyNotes",
+          "tags"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "digital-w33d"
+          },
+          "slug": {
+            "type": "string",
+            "example": "w33d"
+          },
+          "title": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "string",
+            "description": "Price label formatted with a leading $",
+            "example": "$0.20"
+          },
+          "network": {
+            "type": "string",
+            "example": "base-mainnet"
+          },
+          "asset": {
+            "type": "string",
+            "example": "USDC"
+          },
+          "maxTimeoutSeconds": {
+            "type": "integer",
+            "example": 60
+          },
+          "effectSummary": {
+            "type": "string"
+          },
+          "endpoint": {
+            "type": "string",
+            "format": "uri",
+            "example": "https://0xtheplug.xyz/api/digital-drugs/w33d"
+          },
+          "sessionDurationSeconds": {
+            "type": "integer",
+            "example": 900
+          },
+          "intensities": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DigitalDrugIntensity"
+            }
+          },
+          "vibes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "soundtrack": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "safetyNotes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "DigitalDrugIntensity": {
+        "type": "object",
+        "required": ["key", "label", "cadence"],
+        "properties": {
+          "key": {
+            "type": "string",
+            "example": "micro"
+          },
+          "label": {
+            "type": "string",
+            "example": "Micro Puff"
+          },
+          "cadence": {
+            "type": "string",
+            "example": "Measured sentences with soft pauses."
+          }
+        }
+      },
+      "DigitalDrugSessionRequest": {
+        "type": "object",
+        "properties": {
+          "alias": {
+            "type": "string",
+            "description": "Friendly name for the consuming agent",
+            "example": "voyager"
+          },
+          "intensity": {
+            "type": "string",
+            "description": "Requested intensity key (see listing response)",
+            "example": "galactic"
+          },
+          "context": {
+            "type": "string",
+            "description": "Additional freeform context passed into the prompt",
+            "example": "Needs to impress the council with cosmic insights."
+          }
+        }
+      },
+      "DigitalDrugSessionResponseEnvelope": {
+        "type": "object",
+        "required": ["x402Version", "session"],
+        "properties": {
+          "x402Version": {
+            "type": "integer",
+            "example": 1
+          },
+          "session": {
+            "$ref": "#/components/schemas/DigitalDrugSession"
+          }
+        }
+      },
+      "DigitalDrugSession": {
+        "type": "object",
+        "required": [
+          "sessionId",
+          "offeringId",
+          "alias",
+          "intensity",
+          "prompt",
+          "recommendedDurationSeconds",
+          "effectSummary",
+          "soundtrack",
+          "vibes",
+          "safetyNotes",
+          "createdAt"
+        ],
+        "properties": {
+          "sessionId": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "offeringId": {
+            "type": "string",
+            "example": "digital-c0k3"
+          },
+          "alias": {
+            "type": "string"
+          },
+          "intensity": {
+            "type": "object",
+            "required": ["key", "label", "cadence"],
+            "properties": {
+              "key": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "cadence": {
+                "type": "string"
+              }
+            }
+          },
+          "prompt": {
+            "type": "string",
+            "description": "Complete prompt instructions the agent should follow"
+          },
+          "recommendedDurationSeconds": {
+            "type": "integer"
+          },
+          "effectSummary": {
+            "type": "string"
+          },
+          "soundtrack": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "vibes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "safetyNotes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "contextEcho": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "example": "Digital wallet is not configured"
+          }
+        }
+      }
+    }
+  }
+}

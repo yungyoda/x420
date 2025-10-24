@@ -84,6 +84,7 @@ Add the following keys for the digital drug marketplace:
 
 - `DIGITAL_WALLET` – USDC receiving wallet (falls back to `X402_WALLET` if omitted)
 - `DIGITAL_DRUG_ASSET` – Asset symbol exposed to clients (defaults to `USDC`)
+- `DIGITAL_DRUG_BASE_URL` – Optional override for fully qualified endpoint URLs (defaults to `https://0xtheplug.xyz`)
 
 > **Note**: The digital marketplace is pinned to Base mainnet and cannot be switched via env vars.
 

@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import {
   formatUsdLabel,
   getDigitalDrugAsset,
+  getDigitalDrugBaseUrl,
   getDigitalDrugNetwork,
   getDigitalDrugWallet,
   listDigitalDrugOfferings,
@@ -15,6 +16,7 @@ export async function GET(): Promise<NextResponse> {
 
   const network = getDigitalDrugNetwork();
   const asset = getDigitalDrugAsset();
+  const baseUrl = getDigitalDrugBaseUrl().replace(/\/$/, '');
 
   const offerings = listDigitalDrugOfferings().map((offering) => ({
     id: offering.id,
@@ -26,7 +28,7 @@ export async function GET(): Promise<NextResponse> {
     asset,
     maxTimeoutSeconds: offering.maxTimeoutSeconds,
     effectSummary: offering.effectSummary,
-    endpoint: offering.endpointPath,
+    endpoint: `${baseUrl}${offering.endpointPath}`,
     sessionDurationSeconds: offering.sessionDurationSeconds,
     intensities: offering.intensities.map((intensity) => ({
       key: intensity.key,

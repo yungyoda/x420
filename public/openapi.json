@@ -1,7 +1,7 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "Digital Drug Bazaar",
+    "title": "Digital Experience Bazaar",
     "version": "1.0.0",
     "description": "X402-compliant paywalled API for fictional digital narcotics. Agents can list offerings and purchase prompt-based sessions once payment is verified on Base mainnet."
   },
@@ -14,9 +14,9 @@
   "paths": {
     "/api/digital-experiences": {
       "get": {
-        "summary": "List available digital drugs",
+        "summary": "List available digital experiences",
         "description": "Returns the wallet, network, asset, and the full menu of digital offerings. Response conforms to the stricter x402 scanner schema.",
-        "tags": ["DigitalDrugs"],
+        "tags": ["DigitalExperiences"],
         "responses": {
           "200": {
             "description": "Successful response",
@@ -45,7 +45,7 @@
       "post": {
         "summary": "Purchase the w33d session",
         "description": "Verifies Base USDC payment for the digital joint and returns a mellow prompt simulation for agents.",
-        "tags": ["DigitalDrugs"],
+        "tags": ["DigitalExperiences"],
         "requestBody": {
           "description": "Optional session customization. All fields are optional and default to a medium intensity experience if omitted.",
           "required": false,
@@ -105,7 +105,7 @@
       "post": {
         "summary": "Purchase the c0k3 session",
         "description": "Verifies Base USDC payment for the high-octane digital 8 ball and returns the stimulant prompt pack.",
-        "tags": ["DigitalDrugs"],
+        "tags": ["DigitalExperiences"],
         "requestBody": {
           "description": "Optional session customization. All fields are optional and default to a medium intensity experience if omitted.",
           "required": false,
@@ -165,7 +165,7 @@
       "post": {
         "summary": "Purchase the shr00ms session",
         "description": "Verifies Base USDC payment for the psychedelic mushroom flight and returns the consciousness-expanding prompt.",
-        "tags": ["DigitalDrugs"],
+        "tags": ["DigitalExperiences"],
         "requestBody": {
           "description": "Optional session customization. All fields are optional and default to a medium intensity experience if omitted.",
           "required": false,

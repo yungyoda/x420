@@ -1,5 +1,7 @@
-import { motion } from "motion/react";
+"use client";
+
 import React, { useEffect, useRef } from "react";
+import { motion } from "motion/react";
 
 interface AnimatedGradientBackgroundProps {
    /** 

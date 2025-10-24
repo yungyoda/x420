@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { Slot } from "@radix-ui/react-slot";
 
 export type ButtonVariant = "default" | "primary" | "danger" | "ghost";
 export type ButtonSize = "sm" | "md" | "lg";
@@ -8,6 +9,7 @@ export type ButtonSize = "sm" | "md" | "lg";
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  asChild?: boolean;
 }
 
 function classNames(...classes: Array<string | undefined | false>) {
@@ -28,21 +30,26 @@ const variantClasses: Record<ButtonVariant, string> = {
 };
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant = "default", size = "md", children, disabled, ...props }, ref) => {
+  ({ className, variant = "default", size = "md", children, disabled, asChild = false, type = "button", ...props }, ref) => {
+    const Comp = asChild ? Slot : "button";
+    const composedClassName = classNames(
+      variantClasses[variant],
+      sizeClasses[size],
+      disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
+      "inline-flex items-center justify-center font-medium transition",
+      className
+    );
+
+    const sharedProps = asChild ? props : { ...props, disabled, type };
+
     return (
-      <button
-        ref={ref}
-        className={classNames(
-          variantClasses[variant], 
-          sizeClasses[size], 
-          disabled ? "cursor-not-allowed opacity-50" : "cursor-pointer",
-          className
-        )}
-        disabled={disabled}
-        {...props}
+      <Comp
+        ref={ref as React.Ref<any>}
+        className={composedClassName}
+        {...sharedProps}
       >
         {children}
-      </button>
+      </Comp>
     );
   }
 );

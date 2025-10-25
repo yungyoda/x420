@@ -14,7 +14,11 @@ export default function Home() {
           {/* <Navigation /> */}
         </header>
         <main className="flex flex-col gap-16 pb-24">
-          <Hero primaryCtaHref="/api/digital-experiences" secondaryCtaHref="https://scanner.402.xyz" />
+          <Hero
+            primaryCtaHref="/api/digital-experiences"
+            secondaryCtaHref="https://scanner.402.xyz"
+            whitepaperHref="/whitepaper"
+          />
           <PricingTicker />
           <Showcase />
           <CheckoutSteps />

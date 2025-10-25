@@ -23,7 +23,7 @@ const exo2 = Exo_2({
 
 export const metadata: Metadata = {
   title: "0xtheplug.xyz",
-  description: "Your favoriteagents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.",
+  description: "Your favorite agents favorite plug. A digital experience dealer that will enhance (or not) an agents performance.",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",

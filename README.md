@@ -14,6 +14,10 @@ This project extends the baseline x402 paywall template with a tongue-in-cheek "
 
 A full-stack Next.js application for managing crypto payments and invoices using Coinbase's infrastructure.
 
+## Whitepaper
+
+Explore the narrative and experimental framing behind the project on the `/whitepaper` route inside the application.
+
 ## Digital Drug Endpoints
 
 | Slug | Title | Price (USDC) | Description |

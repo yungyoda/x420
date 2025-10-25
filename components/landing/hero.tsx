@@ -8,6 +8,7 @@ import Button from "@/components/ui/Button";
 interface HeroProps {
   readonly primaryCtaHref: string;
   readonly secondaryCtaHref: string;
+  readonly whitepaperHref: string;
 }
 
 const heroVariants = {
@@ -15,7 +16,7 @@ const heroVariants = {
   hidden: { opacity: 0, y: 24 },
 } as const;
 
-export function Hero({ primaryCtaHref, secondaryCtaHref }: HeroProps) {
+export function Hero({ primaryCtaHref, secondaryCtaHref, whitepaperHref }: HeroProps) {
   return (
     <section className="relative z-10 mx-auto flex w-full max-w-5xl flex-col gap-10 px-4 pt-24 pb-20 sm:pt-28 md:pt-32">
       <div className="space-y-8">
@@ -59,7 +60,7 @@ export function Hero({ primaryCtaHref, secondaryCtaHref }: HeroProps) {
       </motion.p>
 
       <motion.div
-        className="flex flex-col gap-4 sm:flex-row"
+        className="flex flex-col gap-3 sm:flex-row sm:flex-wrap"
         variants={heroVariants}
         initial="hidden"
         animate="visible"
@@ -70,6 +71,14 @@ export function Hero({ primaryCtaHref, secondaryCtaHref }: HeroProps) {
         </Button>
         <Button asChild variant="ghost" size="lg" className="w-full sm:w-auto border-white/20 text-white/90 hover:bg-white/10">
           <Link href={secondaryCtaHref}>Call the API</Link>
+        </Button>
+        <Button
+          asChild
+          variant="default"
+          size="lg"
+          className="w-full sm:w-auto border-white/10 bg-white/[0.08] text-white hover:bg-white/[0.14]"
+        >
+          <Link href={whitepaperHref}>Read the whitepaper</Link>
         </Button>
       </motion.div>
     </section>

@@ -35,7 +35,7 @@ export function CheckoutSteps() {
           x402 flow
         </Badge>
         <h2 className="text-balance text-3xl font-semibold text-white sm:text-4xl">
-          The fastest way to sell fictionally illicit personalities.
+          Ypur favorite agents favorite plug.
         </h2>
         <p className="mt-4 text-white/70">
           Our endpoints stick to the scanner spec, tapping Base mainnet for instant, non-refundable tolls. You focus on the narrative high.

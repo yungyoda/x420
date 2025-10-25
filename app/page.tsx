@@ -11,7 +11,7 @@ export default function Home() {
       <AnimatedGradientBackground Breathing startingGap={120} breathingRange={6} animationSpeed={0.03} />
       <div className="relative z-10 mx-auto flex w-full max-w-6xl flex-col">
         <header className="px-4 pt-6 md:pt-8">
-          <Navigation />
+          {/* <Navigation /> */}
         </header>
         <main className="flex flex-col gap-16 pb-24">
           <Hero primaryCtaHref="/api/digital-experiences" secondaryCtaHref="https://scanner.402.xyz" />
